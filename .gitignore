@@ -1,0 +1,8 @@
+*.swp
+*.swo
+*.pyc
+.cache
+.coverage
+tags
+Session.vim
+coverage.xml
