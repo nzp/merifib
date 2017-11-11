@@ -41,7 +41,7 @@ class Fibonacci:
         # TODO: Proveri da li je validan Fibonačijev broj.
         self.initial = initial
 
-    def sequence(self, n):
+    def sequence(self, length):
         """Generiši Fibonačijev niz određene dužine.
 
         Metod generiše Fibonačijev niz zadate dužine i vraća ga kao listu
@@ -52,7 +52,7 @@ class Fibonacci:
             [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
 
         Args:
-            n (int): Dužina željenog niza.
+            length (int): Dužina željenog niza.
 
         Returns:
             (list): Niz željene dužine kao lista.
@@ -77,7 +77,7 @@ class Fibonacci:
 
         # S obzirom da smo već popunili prva dva mesta u listi, umanjujemo
         # brojač za toliko.
-        for _ in range(n-2):
+        for _ in range(length-2):
             a, b = b, a + b
             fseq.append(b)
 
