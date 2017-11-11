@@ -56,7 +56,8 @@ class Fibonacci:
         """
         # Potrebno je imati prethodni broj u nizu jer se ne kreće nužno od 0.
         # Za brojeve veće od 1, on se dobija zaokruživanjem količnika početnog
-        # broja i zlatnog preseka (na osnovu Bineove fomule).
+        # broja i zlatnog preseka budući da je phi limes količnika dva susedna
+        # Fibonačijeva broja.
         if self.initial > 1:
             prev = round(self.initial/self.phi)
         elif self.initial == 1:
