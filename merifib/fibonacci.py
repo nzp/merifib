@@ -113,9 +113,16 @@ class Fibonacci:
         Metod vraća n-ti broj Fibonačijevog niza po definiciji, od n_0 = 0,
         dakle bez obzira kojom vrednošću je instanca niza inicijalizovana.
 
+        Primer::
+
+            >>> f = Fibonacci(8)
+            >>> f.nth(20)
+            4181
+
         Args:
             position (int): Redni broj željenog Fibonačijevog broja.  Pošto
-            indeks niza (n) počinje od 0 u definiciji, važi position = n + 1.
+                indeks niza (n) počinje od 0 u definiciji, važi
+                position = n + 1.
 
         Returns:
             int: Fibonačijev broj na poziciji zadatoj argumentom position.
