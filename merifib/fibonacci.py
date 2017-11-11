@@ -2,6 +2,7 @@
 njim.
 
 """
+
 import math
 
 
@@ -12,6 +13,9 @@ class Fibonacci:
     negativne indekse.
 
     Atributi:
+        initial: Početna vrednost niza u odnosu na koju se obavljaju operacije.
+
+    Atributi klase:
         phi: Zlatni presek, potreban u raznim formulama.
 
     Metode:
