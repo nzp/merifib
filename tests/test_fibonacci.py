@@ -20,3 +20,9 @@ class TestFibonacci:
         f = Fibonacci(55)
 
         assert f.sequence(6) == test_seq2
+
+    def test_nth(self):
+        f = Fibonacci()
+
+        # 499th
+        assert f.nth(500) == 86168291600238450732788312165664788095941068326060883324529903470149056115823592713458328176574447204501
