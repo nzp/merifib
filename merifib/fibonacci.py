@@ -4,6 +4,7 @@ njim.
 """
 
 import decimal
+import json
 
 
 # Podešavanje preciznosti za artimetiku sa Decimal objektima (u tekućoj niti).
@@ -17,7 +18,7 @@ class Fibonacci:
     """Klasa implementira Fibonačijev niz i metode za istraživanje niza.
 
     Metode ove klase ne funkcionišu za generalizaciju Fibonačijevog niza na
-    negativne indekse.  Za izračunavanje se koristi Pythonovi Decimal objekti
+    negativne indekse.  Za izračunavanje se koriste Pythonovi Decimal objekti
     koji predstavljaju egzaktnu reprezentaciju realnih brojeva i omogućavaju
     artimetiku sa arbitrarno velikom preciznošću.  Alternativa, u nekim
     slučajevima, je bila korišćenje matričnog računa, ali za to bi bilo
@@ -31,13 +32,12 @@ class Fibonacci:
     broja) u slučaju nalaženja određenog broja Bineovom formulom.
 
     Atributi:
-        initial: Početna vrednost niza u odnosu na koju se obavljaju operacije.
-
-    Atributi klase:
-        phi: Zlatni presek, potreban u raznim formulama.
+        length: Dužina željenog niza.
+        seed: Početna vrednost niza u odnosu na koju se obavljaju operacije.
 
     Metode:
         sequence: Vraća niz željene dužine.
+        nth: Vraća broj na željenom mestu po redu u nizu (od 0).
 
 
     .. __: https://sites.google.com/site/theagogs/fibonacci-number
@@ -47,66 +47,105 @@ class Fibonacci:
     D = decimal.Decimal  # Preimenujemo da bi skratili.
 
     # Zlatni presek računamo kao Decimal objekat velike preciznosti.
-    phi = (D(1) + D(5).sqrt()) / D(2)
+    _phi = (D(1) + D(5).sqrt()) / D(2)
 
-    def __init__(self, initial=0):
-        """Inicijalizuj instancu niza sa početnom vrednošću.
+    def __init__(self, length=None, seed=0):
+        """Inicijalizuj instancu niza sa početnom vrednošću i dužinom.
 
-        Instance klase se inicijalizuju početnom vrednošću (podrazumevano 0).
-        Primer::
+        Instance klase se inicijalizuju početnom vrednošću (podrazumevano 0) i
+        dužinom niza.  Podrazumevana dužina je None, i u tom slučaju niz je
+        beskonačni generator Fibonačijevih brojeva.  Primer inicijalizacije::
 
-            >>> seq_0 = Fibonacci()  # Inicijalizuje podrazumevanom vrednošću.
-            >>> seq_1 = Fibonacci(initial=13)  # Ili seq_1 = Fibonacci(13).
+            >>> seq0 = Fibonacci()  # Inicijalizuje podrazumevanim vrednostima.
+            >>> seq1 = Fibonacci(length=10, seed=13)  # Ili seq1 = Fibonacci(10, 13).
 
         Args:
-            initial (int): Početna vrednost niza.
+            length (int or None): Dužina niza.  Podrazumevana vrednost je None,
+                i u tom slučaju niz je beskonačan.
+            seed (int): Početna vrednost niza.  Podrazumevana vrednost je 0.
+                Mora biti validan Fibonačijev broj.
 
         """
         # TODO: Proveri da li je validan Fibonačijev broj.
-        self.initial = initial
+        self.seed = seed
+        self.length = length
 
-    def sequence(self, length):
+    @staticmethod
+    def _generator_seq(a, b, reverse=False):
+        # Pomoćni metod, odnosno generator koji vraća beskonačni niz
+        # Fibonačijevih brojeva.  Nije potrebno da bude vezan bilo za klasu,
+        # bilo za instancu, te je statičan metod.
+        #
+        # Argumenti:
+        #   a (int): Prva vrednost niza.
+        #   b (int): Druga vrednost niza.
+        #   reverse (bool): Ukoliko je True, niz se generiše unazad.
+        #       Podrazumevano False.
+        # Vraća:
+        #   int: Sledeći Fibonačijev broj u nizu.
+        while True:
+            yield a
+            a, b = b, a + b
+
+    def sequence(self):
         """Generiši Fibonačijev niz određene dužine.
 
-        Metod generiše Fibonačijev niz zadate dužine i vraća ga kao listu
-        celih brojeva::
+        Metod generiše inicijalizovan Fibonačijev niz i vraća ga kao listu
+        Fibonačijevih brojeva (u slučaju inicijalizovane dužine), ili kao
+        beskonačni generator Fibonačijevih brojeva (u slučaju podrazumevane
+        vrednosti, ``None``)::
 
-            >>> seq = Fibonacci()
-            >>> seq.sequence(10)
+            >>> seq0 = Fibonacci(10)
+            >>> seq0.sequence()
             [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
-
-        Args:
-            length (int): Dužina željenog niza.
+            >>> f = Fibonacci()
+            >>> seq1 = f.sequence()
+            >>> i = 0
+            >>> while i < 300:
+                    print(next(seq1))
+                    i += 1
+            0
+            1
+            1
+            .
+            .
+            .
+            137347080577163115432025771710279131845700275212767467264610201
 
         Returns:
-            list: Niz željene dužine kao lista.
+            list or generator: Niz željene dužine, kao lista, ili generator
+                Fibonačijevih brojeva ukoliko nije inicijalizovana dužina.
 
         """
         # Potrebno je imati prethodni broj u nizu jer se ne kreće nužno od 0.
         # Za brojeve veće od 1, on se dobija zaokruživanjem količnika početnog
         # broja i zlatnog preseka budući da je phi limes količnika dva susedna
         # Fibonačijeva broja.
-        if self.initial > 1:
-            prev = round(self.initial/Fibonacci.phi)
-        elif self.initial == 1:
+        if self.seed > 1:
+            prev = round(self.seed/Fibonacci._phi)
+        elif self.seed == 1:
             prev = 0
-        elif self.initial == 0:
+        elif self.seed == 0:
             prev = 1  # Matematički netačno, ali omogućava tačno pokretanje
                       # sabiranja od nule bez definisanja obe početne vrednosti.
 
         # TODO: Negativne dužine.
-        a = self.initial
-        b = self.initial + prev
-        fseq = [a, b]
+        a = self.seed
+        b = self.seed + prev
 
-        # S obzirom da smo već popunili prva dva mesta u listi, umanjujemo
-        # brojač za toliko.
-        for _ in range(length-2):
-            a, b = b, a + b
-            fseq.append(b)
+        if self.length == None:
+            return Fibonacci._generator_seq(a, b)
+        else:
+            fseq = [a, b]
 
-        return fseq
+            # S obzirom da smo već popunili prva dva mesta u listi, umanjujemo
+            # brojač za toliko.
+            for _ in range(self.length-2):
+                a, b = b, a + b
+                fseq.append(b)
+            return fseq
 
+    # TODO: Make it a classmethod.
     def nth(self, position):
         """Vrati n-ti broj Fibonačijevog niza.
 
@@ -129,10 +168,13 @@ class Fibonacci:
 
         """
         D = decimal.Decimal
-        phi = Fibonacci.phi
+        phi = Fibonacci._phi
 
         # Indeks niza u definiciji i Bineovoj formuli, počinje od 0.
         n = position - 1
 
         # Bineova formula za izračunavanje n-tog Fibonačijevog broja.
         return round((phi**D(n) - (-phi)**D(-n)) / D(5).sqrt())
+
+    def json(self):
+        pass
