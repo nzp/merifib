@@ -1,4 +1,7 @@
+import json
 import types
+
+import pytest
 
 from merifib.fibonacci import Fibonacci
 
@@ -54,4 +57,21 @@ class TestFibonacci:
         assert f.nth(500) == 86168291600238450732788312165664788095941068326060883324529903470149056115823592713458328176574447204501
 
     def test_json(self):
-        pass
+        test_json = {
+            "sequence": [0, 1, 1, 2, 3, 5, 8, 13, 21, 34],
+            "sum": 88,
+            "evens": 4,
+            "odds": 6
+        }
+
+        f = Fibonacci(10)
+        try:
+            decoded_result_json = json.loads(f.json())
+        except json.JSONDecodeError:
+            assert False
+
+        assert decoded_result_json == test_json
+
+        f = Fibonacci()
+        with pytest.raises(ValueError):
+            f.json()

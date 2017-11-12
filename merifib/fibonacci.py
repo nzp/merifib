@@ -38,6 +38,8 @@ class Fibonacci:
     Metode:
         sequence: Vraća niz željene dužine.
         nth: Vraća broj na željenom mestu po redu u nizu (od 0).
+        json: Vraća reprezentaciju niza u JSON formatu sa određenim dodatnim
+            informacijama o nizu.
 
 
     .. __: https://sites.google.com/site/theagogs/fibonacci-number
@@ -177,4 +179,54 @@ class Fibonacci:
         return round((phi**D(n) - (-phi)**D(-n)) / D(5).sqrt())
 
     def json(self):
-        pass
+        """Vrati JSON reprezentaciju niza sa dodatnim informacijama.
+
+        Metod vraća u JSON formatu traženi Fibonačijev niz, zbir svih brojeva u
+        nizu, broj parnih, i broj neparnih brojeva u nizu.  Ukoliko dužina niza
+        nije definisana, diže ``ValueError`` izuzetak.  Primer::
+
+            >>> f = Fibonacci(10)  # Niz dužine 10, od 0.
+            >>> f.json()
+            '{"sequence": [0, 1, 1, 2, 3, 5, 8, 13, 21, 34], "sum": 88, "evens": 4, "odds": 6}'
+
+        Returns:
+            str: JSON objekat sa nizom (JSON array celih brojeva), zbirom
+                brojeva u nizu, brojem parnih i neparnih brojeva u nizu:
+                ``{"sequence": [<niz>], "sum": <suma>, "evens": <broj parnih>,
+                "odds": <broj neparnih>}``.
+
+        Raises:
+            ValueError: Ukoliko je dužina niza nije definisana, tj. ukoliko je
+                ``None``, podiže ValueError izuzetak.
+
+        """
+        # Pošto self.sequence() vraća generator u slučaju da nije definisana
+        # dužina niza, ovde se to proverava, ukoliko je nedefinisana diže se
+        # izuzetak.
+        if self.length == None:
+            raise ValueError("Niz mora imati dužinu.")
+
+        seq = self.sequence()   # Traženi niz brojeva.
+        seq_sum = sum(seq)      # Zbir svih brojeva u nizu.
+
+        # Broj parnih brojeva u nizu.  Izračunat kao dužina liste brojeva iz
+        # niza deljivih sa 2.  Lista je dobijena filtriranjem pomoću anonimne
+        # funkcije koja ispituje vrednost ostatka celobrojnog deljenja.  Drugo
+        # rešenje bi mogla biti for petlja kroz niz i uvećanje brojača za 1
+        # svaki put kada tekuća vrednost iz niza zadovoljava isti uslov.
+        evens = len(list(filter(lambda x: x % 2 == 0, seq)))
+
+        # Broj neparnih brojeva, razlika dužine niza i broja parnih brojeva u
+        # nizu.
+        odds = len(seq) - evens
+
+        # Formiramo dictionary koji odgovara traženom JSON objektu i vraćamo
+        # ispravno formatiran JSON objekat kao string.
+        return json.dumps(
+            {
+                "sequence": seq,
+                "sum": seq_sum,
+                "evens": evens,
+                "odds": odds
+            }
+        )
