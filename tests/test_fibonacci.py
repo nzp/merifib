@@ -29,14 +29,33 @@ class TestFibonacci:
             # For negative numbers.
             f = Fibonacci(seed=-8)
 
+        with pytest.raises(ValueError):
+            f = Fibonacci(length=0)
+
     def test_sequence(self):
         test_seq1 = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
+        test_seq2 = [55, 89, 144, 233, 377, 610]
+        test_seq3 = [5]
+        test_seq4 = [5, 8]
+        test_seq5 = [-3, 2, -1, 1, 0, 1, 1, 2, 3, 5]
+
         f = Fibonacci(10)
         assert f.sequence() == test_seq1
 
-        test_seq2 = [55, 89, 144, 233, 377, 610]
         f = Fibonacci(length=6, seed=55)
         assert f.sequence() == test_seq2
+
+        f = Fibonacci(1, seed=5)
+        assert f.sequence() == test_seq3
+
+        f = Fibonacci(2, seed=5)
+        assert f.sequence() == test_seq4
+
+        f = Fibonacci(-1, seed=5)
+        assert f.sequence() == test_seq3
+
+        f = Fibonacci(-10, seed=5)
+        assert f.sequence() == test_seq5
 
         f = Fibonacci()
         tmp = []

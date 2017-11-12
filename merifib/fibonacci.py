@@ -36,7 +36,7 @@ class Fibonacci:
         seed: Početna vrednost niza u odnosu na koju se obavljaju operacije.
 
     Metode:
-        sequence: Vraća niz željene dužine počevši od zadatog broja.
+        sequence: Vraća niz željene dužine počevši od zadatog broja u oba smera.
         nth: Vraća broj na željenom mestu po redu u nizu (od 0).
         json: Vraća reprezentaciju niza u JSON formatu sa određenim dodatnim
             informacijama o nizu.
@@ -62,14 +62,15 @@ class Fibonacci:
             >>> seq1 = Fibonacci(length=10, seed=13)  # Ili seq1 = Fibonacci(10, 13).
 
         Args:
-            length (int or None): Dužina niza.  Podrazumevana vrednost je None,
-                i u tom slučaju niz je beskonačan.
+            length (int or None): Dužina niza, mora biti različit od 0.
+                Podrazumevana vrednost je None, i u tom slučaju niz je
+                beskonačan.
             seed (int): Početna vrednost niza.  Podrazumevana vrednost je 0.
                 Mora biti validan Fibonačijev broj.
 
         Raises:
             ValueError: Izuzetak se podiže ukoliko argument ``seed`` nije
-                broj Fibonačijevog niza.
+                broj Fibonačijevog niza.  Takođe ukoliko je dužina niza 0.
 
         """
         # Proveravamo da li je argument seed validan Fibonačijev broj pomoću
@@ -86,10 +87,13 @@ class Fibonacci:
         else:
             raise ValueError("Broj ne pripada Fibonačijevom nizu.")
 
-        self.length = length
+        if length == 0:
+            raise ValueError("Dužina mora biti različita od 0.")
+        else:
+            self.length = length
 
     @staticmethod
-    def _generator_seq(a, b, reverse=False):
+    def _generator_seq(a, b):
         # Pomoćni metod, odnosno generator koji vraća beskonačni niz
         # Fibonačijevih brojeva.  Nije potrebno da bude vezan bilo za klasu,
         # bilo za instancu, te je statičan metod.
@@ -97,8 +101,7 @@ class Fibonacci:
         # Argumenti:
         #   a (int): Prva vrednost niza.
         #   b (int): Druga vrednost niza.
-        #   reverse (bool): Ukoliko je True, niz se generiše unazad.
-        #       Podrazumevano False.
+
         # Vraća:
         #   int: Sledeći Fibonačijev broj u nizu.
         while True:
@@ -130,15 +133,24 @@ class Fibonacci:
             .
             137347080577163115432025771710279131845700275212767467264610201
 
+        Ovaj metod je izuzetak po pitanju generalizacije na negativne indekse,
+        tj. brojeve.  Pošto prirodno radi za slučaj brojeva „levo“ od 0, nije
+        veštački ograničavana ta mogućnost.  Na ovaj slučaj se može naići
+        ukoliko se zada dovoljno mali negativan broj za dužinu niza::
+
+            >>> f = Fibonacci(length=-10, seed=5)
+            >>> f.sequence()
+            [-3, 2, -1, 1, 0, 1, 1, 2, 3, 5]
+
         Returns:
             list or generator: Niz željene dužine, kao lista, ili generator
                 Fibonačijevih brojeva ukoliko nije inicijalizovana dužina.
 
         """
-        # Potrebno je imati prethodni broj u nizu jer se ne kreće nužno od 0.
-        # Za brojeve veće od 1, on se dobija zaokruživanjem količnika početnog
-        # broja i zlatnog preseka budući da je phi limes količnika dva susedna
-        # Fibonačijeva broja.
+        # Potrebno je imati prethodni broj u nizu jer se ne kreće nužno od 0,
+        # pa ni nužno rastućim nizom.  Za brojeve veće od 1, on se dobija
+        # zaokruživanjem količnika početnog broja i zlatnog preseka budući da
+        # je phi limes količnika dva susedna Fibonačijeva broja.
         if self.seed > 1:
             prev = round(self.seed/Fibonacci._phi)
         elif self.seed == 1:
@@ -147,13 +159,18 @@ class Fibonacci:
             prev = 1  # Matematički netačno, ali omogućava tačno pokretanje
                       # sabiranja od nule bez definisanja obe početne vrednosti.
 
-        # TODO: Negativne dužine.
         a = self.seed
         b = self.seed + prev
 
         if self.length == None:
             return Fibonacci._generator_seq(a, b)
-        else:
+
+        # Ukoliko je tražena dužina 1, jednostavno vraćamo početnu vrednost.
+        elif abs(self.length) == 1:
+            return [a]
+
+        # Ukoliko je dužina broj veći ili jednak 2.
+        elif self.length >= 2:
             fseq = [a, b]
 
             # S obzirom da smo već popunili prva dva mesta u listi, umanjujemo
@@ -161,6 +178,25 @@ class Fibonacci:
             for _ in range(self.length-2):
                 a, b = b, a + b
                 fseq.append(b)
+            return fseq
+
+        # Slučaj sa negativnim dužinama, tj. brojanjem unazad.  Slično kao u
+        # slučaju sa length >= 2, s tim što za b umesto sledeće uzimamo
+        # prethodnu (``prev``) vrednost, i umesto sabiranja oduzimamo.
+        elif self.length <= -2:
+            b = prev
+            fseq = [b, a]
+
+            # Pošto je sada ``self.length`` negativan, neophodno je uzeti
+            # njegovu apsolutnu vrednost.
+            for _ in range(abs(self.length)-2):
+                a, b = b, a - b
+
+                # insert metod liste je prihvatljiv u slučaju malih listi, što
+                # je ovde slučaj.  U suprotnom collections.deque iz standardne
+                # biblioteke pruža O(1) vremenske performanse za ubacivanje
+                # elementa na prvo mesto.
+                fseq.insert(0, b)
             return fseq
 
     # TODO: Make it a classmethod.
