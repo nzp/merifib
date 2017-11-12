@@ -223,13 +223,12 @@ class Fibonacci:
 
         """
         D = decimal.Decimal
-        phi = cls._phi
 
         # Indeks niza u definiciji i Bineovoj formuli, počinje od 0.
         n = position - 1
 
         # Bineova formula za izračunavanje n-tog Fibonačijevog broja.
-        return round((phi**D(n) - (-phi)**D(-n)) / D(5).sqrt())
+        return round((cls._phi**D(n) - (-cls._phi)**D(-n)) / D(5).sqrt())
 
     def json(self):
         """Vrati JSON reprezentaciju niza sa dodatnim informacijama.
