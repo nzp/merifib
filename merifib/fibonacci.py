@@ -67,9 +67,25 @@ class Fibonacci:
             seed (int): Početna vrednost niza.  Podrazumevana vrednost je 0.
                 Mora biti validan Fibonačijev broj.
 
+        Raises:
+            ValueError: Izuzetak se podiže ukoliko argument ``seed`` nije
+                broj Fibonačijevog niza.
+
         """
-        # TODO: Proveri da li je validan Fibonačijev broj.
-        self.seed = seed
+        # Proveravamo da li je argument seed validan Fibonačijev broj pomoću
+        # svojstva da bar jedan od brojeva 5*seed^2 +/- 4 mora biti potpuni
+        # kvadrat.  Broj takođe mora biti nenegativan jer ne radimo sa
+        # generalizacijom na negativne brojeve.
+        D = decimal.Decimal
+        sq1 = D(5) * D(seed)**D(2) + D(4)
+        sq2 = D(5) * D(seed)**D(2) - D(4)
+
+        if (round(sq1.sqrt())**D(2) == sq1 or
+                round(sq2.sqrt())**D(2) == sq2) and seed >= 0:
+            self.seed = seed
+        else:
+            raise ValueError("Broj ne pripada Fibonačijevom nizu.")
+
         self.length = length
 
     @staticmethod

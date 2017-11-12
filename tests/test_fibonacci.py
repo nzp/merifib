@@ -21,6 +21,14 @@ class TestFibonacci:
         assert f.length == 15
         assert f.seed == 8
 
+        with pytest.raises(ValueError):
+            # F(281) with a couple of randomly changed digits.
+            f = Fibonacci(seed=23770696554372451866815101394984845481039225387896643963981)
+
+        with pytest.raises(ValueError):
+            # For negative numbers.
+            f = Fibonacci(seed=-8)
+
     def test_sequence(self):
         test_seq1 = [0, 1, 1, 2, 3, 5, 8, 13, 21, 34]
         f = Fibonacci(10)
