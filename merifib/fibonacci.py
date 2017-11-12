@@ -36,7 +36,7 @@ class Fibonacci:
         seed: Početna vrednost niza u odnosu na koju se obavljaju operacije.
 
     Metode:
-        sequence: Vraća niz željene dužine.
+        sequence: Vraća niz željene dužine počevši od zadatog broja.
         nth: Vraća broj na željenom mestu po redu u nizu (od 0).
         json: Vraća reprezentaciju niza u JSON formatu sa određenim dodatnim
             informacijama o nizu.
