@@ -199,12 +199,13 @@ class Fibonacci:
                 fseq.insert(0, b)
             return fseq
 
-    # TODO: Make it a classmethod.
-    def nth(self, position):
+    @classmethod
+    def nth(cls, position):
         """Vrati n-ti broj Fibonačijevog niza.
 
         Metod vraća n-ti broj Fibonačijevog niza po definiciji, od n_0 = 0,
         dakle bez obzira kojom vrednošću je instanca niza inicijalizovana.
+        S obzirom da ovaj metod ne zavisi od instance, klasni je metod.
 
         Primer::
 
@@ -222,7 +223,7 @@ class Fibonacci:
 
         """
         D = decimal.Decimal
-        phi = Fibonacci._phi
+        phi = cls._phi
 
         # Indeks niza u definiciji i Bineovoj formuli, počinje od 0.
         n = position - 1
