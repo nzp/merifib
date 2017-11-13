@@ -83,6 +83,9 @@ class TestFibonacci:
         # 499th
         assert f.nth(500) == 86168291600238450732788312165664788095941068326060883324529903470149056115823592713458328176574447204501
 
+        with pytest.raises(ValueError):
+            f.nth(0)
+
     def test_json(self):
         test_json = {
             "sequence": [0, 1, 1, 2, 3, 5, 8, 13, 21, 34],

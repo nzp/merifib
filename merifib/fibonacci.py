@@ -204,8 +204,9 @@ class Fibonacci:
         """Vrati n-ti broj Fibonačijevog niza.
 
         Metod vraća n-ti broj Fibonačijevog niza po definiciji, od n_0 = 0,
-        dakle bez obzira kojom vrednošću je instanca niza inicijalizovana.
-        S obzirom da ovaj metod ne zavisi od instance, klasni je metod.
+        dakle bez obzira kojom vrednošću je instanca niza inicijalizovana.  S
+        obzirom da ovaj metod ne zavisi od instance, klasni je metod.  Pozicija
+        mora biti pozitivna vrednost.
 
         Primer::
 
@@ -221,7 +222,13 @@ class Fibonacci:
         Returns:
             int: Fibonačijev broj na poziciji zadatoj argumentom position.
 
+        Raises:
+            ValueError: Ukoliko je pozicija manja od 1, podiže se izuzetak.
+
         """
+        if position <= 0:
+            raise ValueError("Pozicija mora biti pozitivna vrednost.")
+
         D = decimal.Decimal
 
         # Indeks niza u definiciji i Bineovoj formuli, počinje od 0.
