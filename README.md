@@ -38,9 +38,11 @@ $ PYTHONPATH=. pytest
 Funkcionalnost vezana za zadatke iz testa se nalazi u modulu
 `merifib.fibonacci` (tj. u fajlu `merifib/fibonacci.py`).  Komentari su
 mešavina običnih komentara i docstringova u skladu sa preporukama iz standarda
-PEP 8 i PEP 257.  Docstringovi su formatirani u skladu sa pomenutim standardima
-kao i konvencijama za [Sphinx](http://www.sphinx-doc.org/en/stable/) sistem
-dokumentacije i [Google style format za
+[PEP 8](https://www.python.org/dev/peps/pep-0008/) i [PEP
+257](https://www.python.org/dev/peps/pep-0257/).  Docstringovi su formatirani u
+skladu sa pomenutim standardima kao i konvencijama za
+[Sphinx](http://www.sphinx-doc.org/en/stable/) sistem dokumentacije i [Google
+style format za
 docstringove](http://www.sphinx-doc.org/en/stable/ext/example_google.html) u
 meri u kojoj je to bilo pogodno za ovaj projekat.  Stil izvornog koda se trudi
 da prati PEP 8.  Van docstringova, budući da je napomenuto da je potrebno dobro
