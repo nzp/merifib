@@ -41,7 +41,7 @@ mešavina običnih komentara i docstringova u skladu sa preporukama iz standarda
 PEP 8 i PEP 257.  Docstringovi su formatirani u skladu sa pomenutim standardima
 kao i konvencijama za [Sphinx](http://www.sphinx-doc.org/en/stable/) sistem
 dokumentacije i [Google style format za
-docstringove](http://www.sphinx-doc.org/en/stable/ext/example_google.html) u u
+docstringove](http://www.sphinx-doc.org/en/stable/ext/example_google.html) u
 meri u kojoj je to bilo pogodno za ovaj projekat.  Stil izvornog koda se trudi
 da prati PEP 8.  Van docstringova, budući da je napomenuto da je potrebno dobro
 iskomentarisati kod, obični komentari su možda detaljniji nego što je
