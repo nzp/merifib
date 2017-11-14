@@ -17,23 +17,23 @@ decimal.getcontext().prec = 300
 class Fibonacci:
     """Klasa implementira Fibonačijev niz i metode za istraživanje niza.
 
-    Metode ove klase ne funkcionišu za generalizaciju Fibonačijevog niza na
+    Ova klasa generalno nije pogodna za generalizaciju Fibonačijevog niza na
     negativne indekse.  Za izračunavanje se koriste Pythonovi Decimal objekti
-    koji predstavljaju egzaktnu reprezentaciju realnih brojeva i omogućavaju
-    artimetiku sa arbitrarno velikom preciznošću.  Alternativa, u nekim
-    slučajevima, je bila korišćenje matričnog računa, ali za to bi bilo
-    neophodno koristiti NumPy biblioteku, koja nije deo standardne
-    biblioteke, što uvodi komplikaciju u pokretanju ovakvog jednostavnog demo
-    programa, a pritom su analitička rešenja poput Bineove formule svakako
-    manje prostorne i vremenske kompleksnosti (nalaženje n-tog broja pomoću
-    matrične eksponencijacije ima `vremensku O(log(n)) i prostornu O(log(n)) ili
-    O(1)`__).  Tačnost rešenja dobijenih aritmetikom pomoću Decimal objekata sa
-    tačnošću od 300 decimalnih mesta su proverena do F(500) (501. Fibonačijevog
-    broja) u slučaju nalaženja određenog broja Bineovom formulom.
+    koji predstavljaju egzaktnu reprezentaciju realnih brojeva do veoma velike
+    preciznosti.  Alternativa, u nekim slučajevima, je bila korišćenje
+    matričnog računa, ali za to bi bilo neophodno koristiti NumPy biblioteku,
+    koja nije deo standardne biblioteke, što uvodi komplikaciju u pokretanju
+    ovakvog jednostavnog demo programa, a pritom su analitička rešenja poput
+    Bineove formule svakako manje prostorne i vremenske kompleksnosti
+    (izračunavanje n-tog broja pomoću matrične eksponencijacije ima `vremensku
+    O(log(n)) i prostornu O(log(n)) ili O(1)`__).  Tačnost rešenja dobijenih
+    aritmetikom pomoću Decimal objekata sa tačnošću od 300 decimalnih mesta su
+    proverena do F(500) (501. Fibonačijevog broja) u slučaju nalaženja
+    određenog broja Bineovom formulom.
 
     Atributi:
         length: Dužina željenog niza.
-        seed: Početna vrednost niza u odnosu na koju se obavljaju operacije.
+        seed: Početna vrednost niza.
 
     Metode:
         sequence: Vraća niz željene dužine počevši od zadatog broja u oba smera.
@@ -101,7 +101,7 @@ class Fibonacci:
         # Argumenti:
         #   a (int): Prva vrednost niza.
         #   b (int): Druga vrednost niza.
-
+        #
         # Vraća:
         #   int: Sledeći Fibonačijev broj u nizu.
         while True:
@@ -156,8 +156,10 @@ class Fibonacci:
         elif self.seed == 1:
             prev = 0
         elif self.seed == 0:
-            prev = 1  # Matematički netačno, ali omogućava tačno pokretanje
-                      # sabiranja od nule bez definisanja obe početne vrednosti.
+            prev = 1  # Matematički netačno za osnovnu definiciju niza (međutim
+                      # tačno ako se uvode negativni indeksi), ali
+                      # omogućava tačno pokretanje sabiranja od nule bez
+                      # definisanja obe početne vrednosti.
 
         a = self.seed
         b = self.seed + prev
@@ -203,13 +205,14 @@ class Fibonacci:
     def nth(cls, position):
         """Vrati n-ti broj Fibonačijevog niza.
 
-        Metod vraća n-ti broj Fibonačijevog niza po definiciji, od n_0 = 0,
-        dakle bez obzira kojom vrednošću je instanca niza inicijalizovana.  S
+        Metod vraća n-ti broj Fibonačijevog niza po definiciji, od n_0 = 0.  S
         obzirom da ovaj metod ne zavisi od instance, klasni je metod.  Pozicija
         mora biti pozitivna vrednost.
 
         Primer::
 
+            >>> Fibonacci.nth(20)
+            4181
             >>> f = Fibonacci(8)
             >>> f.nth(20)
             4181
@@ -220,7 +223,7 @@ class Fibonacci:
                 position = n + 1.
 
         Returns:
-            int: Fibonačijev broj na poziciji zadatoj argumentom position.
+            int: Fibonačijev broj rednog broja zadatog argumentom position`
 
         Raises:
             ValueError: Ukoliko je pozicija manja od 1, podiže se izuzetak.
@@ -240,9 +243,9 @@ class Fibonacci:
     def json(self):
         """Vrati JSON reprezentaciju niza sa dodatnim informacijama.
 
-        Metod vraća u JSON formatu traženi Fibonačijev niz, zbir svih brojeva u
-        nizu, broj parnih, i broj neparnih brojeva u nizu.  Ukoliko dužina niza
-        nije definisana, diže ``ValueError`` izuzetak.  Primer::
+        Metod vraća traženi Fibonačijev niz u JSON formatu, sa zbirom svih
+        brojeva, brojem parnih, i brojem neparnih brojeva u nizu.  Ukoliko
+        dužina niza nije definisana, diže ``ValueError`` izuzetak.  Primer::
 
             >>> f = Fibonacci(10)  # Niz dužine 10, od 0.
             >>> f.json()

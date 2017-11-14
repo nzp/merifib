@@ -234,5 +234,5 @@ ttk.Button(mainframe,
            command=new_sequence_win).grid(column=0, row=2)
 
 
-# Glavna event petlja programa.
+# Glavna petlja programa.
 root.mainloop()
