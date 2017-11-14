@@ -46,7 +46,9 @@ meri u kojoj je to bilo pogodno za ovaj projekat.  Stil izvornog koda se trudi
 da prati PEP 8.  Van docstringova, budući da je napomenuto da je potrebno dobro
 iskomentarisati kod, obični komentari su možda detaljniji nego što je
 uobičajeno ukoliko se prati pravilo „komentarisati zašto radi, a ne šta radi“,
-tj. ponegde možda prelaze u opisivanje „šta radi“.
+tj. ponegde možda prelaze u opisivanje „šta radi“.  Komentari su pisani na
+srpskom jer nije bilo napomene o tome, pa sam pretpostavio da je to
+najbezbednije rešenje.
 
 Što se tiče `merifib/merifib.py` gde je implementiran interfejs, pošto je deo
 programa, komentari takođe prate PEP 8 i PEP 257, ali nisu detaljni kao u
