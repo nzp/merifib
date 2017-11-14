@@ -15,9 +15,9 @@ Program za istraživanje nekih aspekata Fibonačijevog niza.
 
 Za pokretanje programa potreban je Python 3.  Nakon raspakivanja arhive,
 program se pokreće komandom
-
-  $ python3 merifib/merifib.py
-
+```
+$ python3 merifib/merifib.py
+```
 U početnom prozoru su tasteri koji otvaraju prozore namenjene prethodno
 navedenim funkcijama.
 
@@ -26,13 +26,13 @@ navedenim funkcijama.
 Za pokretanje unit testova potrebno je instalirati Python biblioteku Pytest.
 Nakon toga, dovoljno je izvršiti skriptu ``test.sh`` u glavnom direktorijumu
 arhive:
-
-  $ ./test.sh
-
+```
+$ ./test.sh
+```
 Ili, direktno komandom:
-
-  $ PYTHONPATH=. pytest
-
+```
+$ PYTHONPATH=. pytest
+```
 ## Napomene u vezi sa komentarima i sl.
 
 Funkcionalnost vezana za zadatke iz testa se nalazi u modulu
