@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-"""Modul implementira korisnički interfejs programa i služi za pokretanje aplikacije."""
+"""Modul implementira korisnički interfejs programa i služi za pokretanje
+aplikacije."""
 
 
 import tkinter as tk
@@ -69,7 +70,8 @@ def set_json(length, seed, parent_win):
     """Setuj JSON reprezentaciju niza zadate dužine i početne vrednosti.
 
     Funkcija setuje globalnu promenljivu ``json_sequence`` koja sadrži JSON
-    prikaz niza sa dodatnim podacima koja se prikazuje u korisničkom interfejsu.
+    prikaz niza sa dodatnim podacima koja se prikazuje u korisničkom
+    interfejsu.
 
     Args:
         length (int): Dužina niza.
@@ -89,6 +91,7 @@ def set_json(length, seed, parent_win):
             "Dužina niza mora biti različita od 0, a početna vrednost mora "
             "biti validan Fibonačijev broj.",
             parent=parent_win)
+
 
 def set_nth(position, parent_win):
     """Setuj vrednost Fibonačijevog broja na datoj poziciji.
@@ -136,7 +139,9 @@ def sequence_of_length_win():
                text="Izračunaj",
                command=lambda: set_sequence(fib_sequence_length.get(),
                                             0,
-                                            win)).grid(column=1, row=1, sticky=tk.E)
+                                            win)).grid(column=1,
+                                                       row=1,
+                                                       sticky=tk.E)
 
     # Prikaz izračunatog niza.
     sequence = ttk.Label(mainframe, textvariable=fib_sequence)
@@ -147,7 +152,9 @@ def sequence_of_length_win():
                text="Prikaži JSON",
                command=lambda: set_json(fib_sequence_length.get(),
                                         0,
-                                        win)).grid(column=1, row=3, sticky=tk.E)
+                                        win)).grid(column=1,
+                                                   row=3,
+                                                   sticky=tk.E)
 
     ttk.Label(mainframe, textvariable=json_fib_sequence).grid(column=0,
                                                               row=4,
@@ -173,13 +180,15 @@ def nth_number_win():
 
     ttk.Button(mainframe,
                text="Izračunaj",
-               command=lambda: set_nth(fib_ord.get(), win)
-               ).grid(column=1, row=1, sticky=tk.W)
+               command=lambda: set_nth(fib_ord.get(), win)).grid(column=1,
+                                                                 row=1,
+                                                                 sticky=tk.W)
 
     # Prikaz broja.
     ttk.Label(mainframe, textvariable=fib_ord_num).grid(column=0,
                                                         row=2,
                                                         columnspan=2)
+
 
 def new_sequence_win():
     """Vraća prozor za računanje novog niza željene dužine."""

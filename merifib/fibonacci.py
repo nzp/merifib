@@ -36,7 +36,8 @@ class Fibonacci:
         seed: Početna vrednost niza.
 
     Metode:
-        sequence: Vraća niz željene dužine počevši od zadatog broja u oba smera.
+        sequence: Vraća niz željene dužine počevši od zadatog broja u oba
+            smera.
         nth: Vraća broj na željenom mestu po redu u nizu (od 0).
         json: Vraća reprezentaciju niza u JSON formatu sa određenim dodatnim
             informacijama o nizu.
@@ -58,8 +59,9 @@ class Fibonacci:
         dužinom niza.  Podrazumevana dužina je None, i u tom slučaju niz je
         beskonačni generator Fibonačijevih brojeva.  Primer inicijalizacije::
 
-            >>> seq0 = Fibonacci()  # Inicijalizuje podrazumevanim vrednostima.
-            >>> seq1 = Fibonacci(length=10, seed=13)  # Ili seq1 = Fibonacci(10, 13).
+            >>> seq0 = Fibonacci()
+            >>> seq1 = Fibonacci(length=10, seed=13)
+            >>> seq1 = Fibonacci(10, 13).
 
         Args:
             length (int or None): Dužina niza, mora biti različit od 0.
@@ -164,7 +166,7 @@ class Fibonacci:
         a = self.seed
         b = self.seed + prev
 
-        if self.length == None:
+        if self.length is None:
             return Fibonacci._generator_seq(a, b)
 
         # Ukoliko je tražena dužina 1, jednostavno vraćamo početnu vrednost.
@@ -265,7 +267,7 @@ class Fibonacci:
         # Pošto self.sequence() vraća generator u slučaju da nije definisana
         # dužina niza, ovde se to proverava, ukoliko je nedefinisana diže se
         # izuzetak.
-        if self.length == None:
+        if self.length is None:
             raise ValueError("Niz mora imati dužinu.")
 
         seq = self.sequence()   # Traženi niz brojeva.

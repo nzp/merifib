@@ -11,7 +11,7 @@ class TestFibonacci:
     def test_init(self):
         f = Fibonacci()
         assert f.seed == 0
-        assert f.length == None
+        assert f.length is None
 
         f = Fibonacci(10, 13)
         assert f.length == 10
@@ -61,7 +61,7 @@ class TestFibonacci:
         tmp = []
         genseq = f.sequence()
 
-        assert type(genseq) == types.GeneratorType
+        assert isinstance(genseq, types.GeneratorType)
 
         while len(tmp) < 10:
             tmp.append(next(genseq))
@@ -71,7 +71,7 @@ class TestFibonacci:
         tmp = []
         genseq = f.sequence()
 
-        assert type(genseq) == types.GeneratorType
+        assert isinstance(genseq, types.GeneratorType)
 
         while len(tmp) < 6:
             tmp.append(next(genseq))
