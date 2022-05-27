@@ -2,6 +2,10 @@
 
 Program za istraživanje nekih aspekata Fibonačijevog niza.
 
+*Ovo je bio intervju zadatak, zato su komentari itd. malo čudni, tako je traženo.
+/ The reason for general comments, README, etc. weirdness is that this was an interview
+assignment, it was required.*
+
 ## Funkcionalnost
 
 *  Ispisivanje Fibonačijevog niza zadate dužine.
